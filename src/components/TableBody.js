@@ -11,7 +11,6 @@ class TableBody extends Component {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">UserName</th>
-                    <th scope="col">Id</th>
                     <th scope="col">Reason</th>
                     <th scope="col">Hours</th>
                     <th scope="col">Date</th>
@@ -28,7 +27,6 @@ class TableBody extends Component {
                   <tr key={shortid.generate()}>
                     <th scope="row"></th>
                     <td>{item.user_name}</td>
-                    <td>{item.user_id}</td>
                     <td>{item.reason}</td>
                     <td>{item.hours}</td>
                     <td>{item.event_date}</td>

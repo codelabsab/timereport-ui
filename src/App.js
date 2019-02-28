@@ -1,114 +1,40 @@
 import React, { Component } from "react";
-import TableBody from './components/TableBody'
-import Form from './components/Form';
-import DatePicker from './components/DatePicker';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
+import Login from './components/Login';
 import NavBar from './components/NavBar';
+import Timereport from './components/Timereport';
+import { Container } from 'semantic-ui-react';
 
-//const user_id = 'U2FGC795G';
+require('dotenv').config();
 
+function onAuthRequired({history}) {
+    history.push('/');
+  }
 
 class App extends Component {
-    constructor(props) {
-      super(props)
-      this.handleSelectChange = this.handleSelectChange.bind(this);
-    }
-
-    state = {
-        data: [],
-        names: [],
-        error: undefined,
-        selectedOption: undefined,
-        selectedUserName: undefined,
-        selectedUserId: undefined,
-    }
-
-    componentDidMount() {
-        this.fetchNames();
-    }
-
-    handleSelectChange = (selectedOption) => {
-        var selectedUserName = selectedOption.target.value.split(',')[0];
-        var selectedUserId = selectedOption.target.value.split(',')[1];
-
-        this.setState({
-            selectedOption: selectedOption.target.value,
-            selectedUserName: selectedUserName,
-            selectedUserId: selectedUserId,
-        });
-        console.log('userName is : ' + selectedUserName);
-        console.log('Id is : ' + selectedUserId);
-    }
-
-    handleDateChange = (e, p) => {
-        var moment = require('moment');
-        var startDate = moment(p.startDate.toISOString()).format("YYYY-MM-DD");
-        var endDate = moment(p.endDate.toISOString()).format("YYYY-MM-DD");
-        this.setState({
-            startDate: startDate,
-            endDate: endDate
-        })
-        console.log('selected userid is ' + this.state.selectedUserId)
-        console.log('it works, startDate: ' + startDate + ' endDate: ' + endDate)
-        this.fetchData(this.state.selectedUserId, startDate, endDate)
-    }
-
-    fetchNames = async (e) => {
-        const getUserNames = await fetch(`https://ywdi37qne9.execute-api.eu-north-1.amazonaws.com/api/user/names`);
-        const names = await getUserNames.json();
-        if (names) {
-            this.setState({
-                names: names,
-                error: ''
-            });
-        } else {
-            this.setState({
-                names: undefined,
-                error: 'Nothing Found in Database'
-            })
-            console.log(this.state.error);
-        }
-    }
-
-    fetchData = async (selectedUserId, startDate, endDate) => {
-        console.log('fetchData user_id is ' + selectedUserId)
-        const getUserId = await fetch(`https://ywdi37qne9.execute-api.eu-north-1.amazonaws.com/api/user/${selectedUserId}?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`);
-        const data = await getUserId.json();
-
-        if (data) {
-            this.setState({
-                data: data,
-                error: ''
-            });
-        } else {
-            this.setState({
-                data: undefined,
-                error: 'Nothing Found in Database'
-            })
-            console.log(this.state.error);
-        }
-    }
+    
     render() {
-        return (
-            <div className="App">
-             <NavBar/>
-                <div className="jumbotron">
-                <br></br>
-                
-                </div>
-                <div className="col-sm-6 col-md-6 col-lg-6">
-                    <form>
-                        <div className='form-row'>
+        console.log('app.js base url is ' + process.env.REACT_APP_okta_baseurl);
+        console.log('app.js backend_url is ' + process.env.REACT_APP_backend_url)
 
-                            <Form
-                            names={this.state.names}
-                            selectedOption={this.state.selectedOption}
-                            handleSelectChange={this.handleSelectChange}
-                            />
-                            <DatePicker handleDateChange={this.handleDateChange}/>
-                        </div> 
-                    </form>
-                </div>      
-                    <TableBody data={this.state.data}/>
+        return (
+            <div>
+                <Router>
+                    <Security
+                        issuer={process.env.REACT_APP_okta_baseurl + '/oauth2/default'}
+                        client_id={process.env.REACT_APP_okta_client_id}
+                        redirect_uri={window.location.origin + '/implicit/callback'}
+                        onAuthRequired={onAuthRequired}
+                    >
+                        <NavBar/>
+                        <Container text style={{ marginTop: '7em' }}>   
+                            <Route path="/" exact={true} render={() => <Login baseUrl={process.env.REACT_APP_okta_baseurl} />} />
+                            <SecureRoute path="/timereport" render={() => <Timereport backend_url={process.env.REACT_APP_backend_url} />} />
+                            <Route path="/implicit/callback" component={ImplicitCallback} />
+                        </Container>
+                    </Security>
+                </Router>
             </div>
         );
     }
