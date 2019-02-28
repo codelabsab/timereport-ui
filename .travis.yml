@@ -35,4 +35,4 @@ jobs:
     script:
     - npm install
     - npm run build:prod
-    - aws s3 sync build/ s3://timereport.codelabs.se --acl --public-read
+    - aws s3 sync build/ s3://timereport.codelabs.se --acl public-read
