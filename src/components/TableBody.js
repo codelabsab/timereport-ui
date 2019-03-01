@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 
 class TableBody extends Component {
+
+  
   render() {
     var shortid = require('shortid');
-    
+    var total = 0;
+    // summarize total
+    Object.values(this.props.data).forEach(value => {total = total + parseInt(value.hours) });
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
         <table className="table table-hover">
@@ -33,8 +37,14 @@ class TableBody extends Component {
                   </tr>
                 ))}
               </tbody> 
+              
             }
-          </table>  
+          </table>
+          {this.props.data && 
+            <div className="text-center">
+              <h4>Total Hours: {total}</h4>
+              </div>
+          }
         </div>
       )
   } 

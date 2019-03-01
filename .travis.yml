@@ -1,6 +1,7 @@
 language: python
 python:
 - '3.6'
+install: true
 cache: pip
 node_js: 6
 env:

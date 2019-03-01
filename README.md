@@ -14,14 +14,16 @@ REACT_APP_backend_url=https://mybackend/api
 
 ```
 npm install
-npm run build:dev
-
+npm run build
 # to run locally
 serve -s build/ -l 3000
 ```
 ### Packaing .env secrets for travis-ci
 ```
-$ tar cvf secrets.tar .env .env.dev .env.prod
+$ tar cvf secrets.tar .env* 
+a .env
+a .env.dev
+a .env.prod
 
 $ travis encrypt-file secrets.tar --add
 storing result as secrets.tar.enc
