@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 
 class TableBody extends Component {
 
-  
   render() {
     var shortid = require('shortid');
-    var total = 0;
+    var data = this.props.data;
     var total_working_hours = this.props.totaldays * 8;
+    var total = 0;
     // summarize total hours
-    Object.values(this.props.data).forEach(value => {total = total + parseInt(value.hours) });
-
+    Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
+    console.log('total working hours are: ' + total_working_hours);
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
         <table className="table table-hover">
@@ -27,9 +27,9 @@ class TableBody extends Component {
                 { this.props.error }
               </p>
             }
-            {this.props.data && 
+            {data &&
               <tbody>
-                {this.props.data.map(item => (
+                {data.map(item => (
                   <tr key={shortid.generate()}>
                     <th scope="row"></th>
                     <td>{item.user_name}</td>
@@ -39,17 +39,22 @@ class TableBody extends Component {
                   </tr>
                 ))}
               </tbody> 
-            }
+ 
+          }
           </table>
-          {this.props.data && total_working_hours &&
-            <div className="text-center">
-              <h4>Total Hours: {total}</h4>
-              <h4>Total Working hours: {total_working_hours}</h4>
-              <h4>Total Net hours: {total_working_hours-total}</h4>
-            </div>
+          <div className="text-center">
+          {data && !isNaN(total_working_hours) && (total !== 0 ) ?
+            <p style={{fontWeight: 'bold'}}>Total hours / month: 
+                <span style={{color:  '#006600', fontWeight: 'bold'}}>  {total_working_hours-total}</span>/{total_working_hours}  (
+                <span style={{color: '#cc0000', fontWeight: 'bold'}}>-{total}</span>)
+            </p>
+          :
+          <p>
+          </p>
           }
         </div>
-      )
+    </div>
+    )
   } 
 } 
 export default TableBody;
