@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import DateRangePicker from 'react-bootstrap-daterangepicker';
+
+var Datetime = require('react-datetime');
 
 class DatePicker extends Component {
+
   render() {
 
     return (
       <div className="col-sm-6 col-md-6 col-lg-6">
-      <DateRangePicker onApply={this.props.handleDateChange}>
-                    <button type="button" className="btn btn-default btn-sm">
-                        <span className="oi oi-calendar"></span> &nbsp;&nbsp;Select Date
-                </button>
-                </DateRangePicker>
+        <Datetime dateFormat="YYYY-MM" utc={true} closeOnSelect={true} timeFormat={false} inputProps={{ placeholder: 'Select Month'}} onChange={this.props.handleDateChange}/>
       </div>
     )
   }
