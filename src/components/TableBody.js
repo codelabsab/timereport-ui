@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 
 class TableBody extends Component {
+  state = {
+    data: [],
+  }
 
   render() {
     var shortid = require('shortid');
@@ -10,6 +13,7 @@ class TableBody extends Component {
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
     console.log('total working hours are: ' + total_working_hours);
+    console.log('data is ' + data)
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
         <table className="table table-hover">
@@ -27,7 +31,7 @@ class TableBody extends Component {
                 { this.props.error }
               </p>
             }
-            {data &&
+            {data !== undefined && !isNaN(total_working_hours) &&
               <tbody>
                 {data.map(item => (
                   <tr key={shortid.generate()}>
@@ -39,7 +43,16 @@ class TableBody extends Component {
                   </tr>
                 ))}
               </tbody> 
- 
+            }
+               {(Object.entries(data).length === 0 && data.constructor === Object) && !isNaN(total_working_hours) &&
+                <tbody className="justify-content-center">
+                <tr key={shortid.generate()}>
+                  <th scope="row"></th>
+                  <td></td>
+                  <td colSpan='2'>Nothing Found</td>
+                  <td></td>
+                </tr>
+               </tbody> 
           }
           </table>
           <div className="text-center">
