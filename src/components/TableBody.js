@@ -6,8 +6,10 @@ class TableBody extends Component {
   render() {
     var shortid = require('shortid');
     var total = 0;
-    // summarize total
+    var total_working_hours = this.props.totaldays * 8;
+    // summarize total hours
     Object.values(this.props.data).forEach(value => {total = total + parseInt(value.hours) });
+
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
         <table className="table table-hover">
@@ -37,13 +39,14 @@ class TableBody extends Component {
                   </tr>
                 ))}
               </tbody> 
-              
             }
           </table>
-          {this.props.data && 
+          {this.props.data && total_working_hours &&
             <div className="text-center">
               <h4>Total Hours: {total}</h4>
-              </div>
+              <h4>Total Working hours: {total_working_hours}</h4>
+              <h4>Total Net hours: {total_working_hours-total}</h4>
+            </div>
           }
         </div>
       )
