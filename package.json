@@ -46,6 +46,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "css-loader": "^2.1.0",
     "typescript": "^3.3.3333"
   }

@@ -7,13 +7,15 @@ class TableBody extends Component {
 
   render() {
     var shortid = require('shortid');
-    var data = this.props.data;
+    var data = this.props.data || undefined;
     var total_working_hours = this.props.totaldays * 8;
     var total = 0;
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
     console.log('total working hours are: ' + total_working_hours);
-    console.log('data is ' + data)
+    console.log('data is ' + typeof data)
+    console.log('data is length' + data.length)
+
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
         <table className="table table-hover">
@@ -44,7 +46,7 @@ class TableBody extends Component {
                 ))}
               </tbody> 
             }
-               {(Object.entries(data).length === 0 && data.constructor === Object) && !isNaN(total_working_hours) &&
+               {(data.length === 0 && typeof data === 'object') && !isNaN(total_working_hours) &&
                 <tbody className="justify-content-center">
                 <tr key={shortid.generate()}>
                   <th scope="row"></th>
