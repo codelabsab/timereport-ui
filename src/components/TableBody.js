@@ -26,6 +26,7 @@ class TableBody extends Component {
                     <th scope="col">Reason</th>
                     <th scope="col">Hours</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Locked</th>
                 </tr>
             </thead>
             {this.props.error && 
@@ -42,6 +43,7 @@ class TableBody extends Component {
                     <td>{item.reason}</td>
                     <td>{item.hours}</td>
                     <td>{item.event_date}</td>
+                    <td>{item.lock}</td>
                   </tr>
                 ))}
               </tbody> 
