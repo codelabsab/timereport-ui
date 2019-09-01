@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-var moment = require('moment');
 
 class TableBody extends Component {
   state = {
@@ -12,18 +11,12 @@ class TableBody extends Component {
     var lockstate = this.props.lockstate || 'unlocked';
     var total_working_hours = this.props.totaldays * 8;
     var total = 0;
-    // clear weekends from data
-    var weekday = [];
-    Object.values(data).forEach(value => {
-      if (moment(value.event_date).isoWeekday() > 6) {
-        weekday.push = value.event_date;
-        //console.log('deleting weekday ' + Object.values(value) + 'from event_date ' + value.event_date )
-        //console.log('removing weekend from data')
-        data.shift();
-      }});
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
-    //Object.values(data).forEach(value => { console.log('moment weekday is ' + moment(value.event_date).isoWeekday() + 'event date is : ' + value.event_date) });
+    //console.log('total working hours are: ' + total_working_hours);
+    //console.log('data is ' + typeof data)
+    //console.log('data is length' + data.length)
+    //console.log('lock Count: ' + lockstate.Count)
 
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
