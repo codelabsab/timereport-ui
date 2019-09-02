@@ -18,23 +18,17 @@ class TableBody extends Component {
     var weekday = [];
     var i = 0;
     Object.values(data).forEach(value => {
-      console.log('index is : ' + i)
       if (moment(value.event_date).isoWeekday() < 6) {
       } else {
         weekday.push(i)
       }
       i++;
     });
-    console.log('weekday array is ' + weekday)
     for (var idx = weekday.length -1; idx >= 0; idx--)
     data.splice(weekday[idx],1);
 
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
-    //console.log('total working hours are: ' + total_working_hours);
-    //console.log('data is ' + typeof data)
-    //console.log('data is length' + data.length)
-    //console.log('lock Count: ' + lockstate.Count)
 
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">

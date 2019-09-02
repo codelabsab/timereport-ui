@@ -24,7 +24,6 @@ class Timereport extends Component {
       }
   
       componentDidMount() {
-          //console.log('backend url is: ' + this.props.backend_url)
           this.fetchNames();
       }
   
@@ -37,25 +36,17 @@ class Timereport extends Component {
               selectedUserName: selectedUserName,
               selectedUserId: selectedUserId,
           });
-          //console.log('userName is : ' + selectedUserName);
-          //console.log('Id is : ' + selectedUserId);
       }
 
       handleDateChange = (p) => {
-          //console.log('inside handleDateChange in ms' + p)
           const selectedMonth = moment.unix(p/1000).format('YYYY-MM');
           const startDate = moment.unix(p/1000).startOf('month').format('YYYY-MM-DD');
           const endDate   = moment.unix(p/1000).endOf('month').format('YYYY-MM-DD');          
-          //console.log('inside handleDatechange start' + startDate)
-          //console.log('inside handleDatechange end' + endDate)
-          //console.log('inside handleDatechange selectedmonth' + selectedMonth)
           this.setState({
               startDate: startDate,
               endDate: endDate,
               selectedMonth: selectedMonth
           })
-          //console.log('selected userid is ' + this.state.selectedUserId);
-          //console.log('it works, startDate: ' + startDate + ' endDate: ' + endDate);
           this.fetchData(this.state.selectedUserId, startDate, endDate);
           this.fetchWorkDays(selectedMonth);
       }
@@ -78,15 +69,11 @@ class Timereport extends Component {
       }
   
       fetchData = async (selectedUserId, startDate, endDate) => {
-          //console.log('fetchData user_id is ' + selectedUserId);
-          //console.log('fetchData startdate enddate query is ' + startDate + ' ' + endDate);
           const yearMonth = startDate.slice(0,7);
-          //console.log('year month is fetched from startDate query : ' + yearMonth)
           const getUserId = await fetch(`${this.props.backend_url}/event/users/${selectedUserId}?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`);
           const data = await getUserId.json();
           const getLock = await fetch(`${this.props.backend_url}/lock/users/${selectedUserId}/${yearMonth}`);
           const lockstate = await getLock.json();
-          //console.log('if lockstate response count is one: ' + lockstate.Count)
           if (data) {
               this.setState({
                   data: data,
@@ -104,11 +91,9 @@ class Timereport extends Component {
       }
 
       fetchWorkDays = async (selectedDate) => {
-        //console.log('fetchWorkDays ' + selectedDate)
         const getTotal = await fetch(`http://api.codelabs.se/${encodeURIComponent(selectedDate)}.json`);
         const totaldays = await getTotal.json();
         if (totaldays) {
-            //console.log('fetchworkdays totaldays found ' + totaldays.antal_arbetsdagar);
             this.setState({
                 totaldays: totaldays.antal_arbetsdagar,
                 error: ''
@@ -120,12 +105,8 @@ class Timereport extends Component {
             })
             console.log(this.state.error);
         }
-        //console.log('fetchworkdays is set totaldays is ' + this.state.totaldays);
     }
   render() {
-      //console.log('timereport.js backend url is: ' + this.props.backend_url)
-      //console.log('render timereport.js is set totaldays is ' + this.state.totaldays);
-      //console.log('lock is: ' + this.state.lockstate);
     return (
         <div className="col-sm-12 col-md-12 col-lg-12">
         <form>
