@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { type } from 'os';
 var moment = require('moment');
 
 class TableBody extends Component {
@@ -14,13 +15,24 @@ class TableBody extends Component {
     var total = 0;
     // clear weekends from data
     var weekday = [];
+    console.log('data is of  entries ' + Object.keys(data))
+    console.log('data is of length ' + data.length -1)
+    var i = 0;
     Object.values(data).forEach(value => {
-      if (moment(value.event_date).isoWeekday() > 6) {
-        weekday.push = value.event_date;
-        //console.log('deleting weekday ' + Object.values(value) + 'from event_date ' + value.event_date )
-        //console.log('removing weekend from data')
-        data.shift();
-      }});
+      console.log('index is : ' + i)
+      if (moment(value.event_date).isoWeekday() < 6) {
+        console.log('weekday is ' + value.event_date)
+        console.log('index for weekday is : ' + i)
+      } else {
+        console.log('weekEND is :' + value.event_date)
+        console.log('removing index for weekEND : ' + i)
+        weekday.push(i)
+      }
+      i++;
+    });
+    console.log('weekday array is ' + weekday)
+    for (var i = weekday.length -1; i >= 0; i--)
+    data.splice(weekday[i],1);
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
     //Object.values(data).forEach(value => { console.log('moment weekday is ' + moment(value.event_date).isoWeekday() + 'event date is : ' + value.event_date) });
