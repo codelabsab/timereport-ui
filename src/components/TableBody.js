@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { type } from 'os';
 var moment = require('moment');
 
+
 class TableBody extends Component {
   state = {
     data: [],
@@ -33,9 +34,13 @@ class TableBody extends Component {
     console.log('weekday array is ' + weekday)
     for (var i = weekday.length -1; i >= 0; i--)
     data.splice(weekday[i],1);
+
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
-    //Object.values(data).forEach(value => { console.log('moment weekday is ' + moment(value.event_date).isoWeekday() + 'event date is : ' + value.event_date) });
+    //console.log('total working hours are: ' + total_working_hours);
+    //console.log('data is ' + typeof data)
+    //console.log('data is length' + data.length)
+    //console.log('lock Count: ' + lockstate.Count)
 
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
