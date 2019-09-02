@@ -18,8 +18,7 @@ class TableBody extends Component {
     var weekday = [];
     var i = 0;
     Object.values(data).forEach(value => {
-      if (moment(value.event_date).isoWeekday() < 6) {
-      } else {
+      if (moment(value.event_date).isoWeekday() >= 6) {
         weekday.push(i)
       }
       i++;
