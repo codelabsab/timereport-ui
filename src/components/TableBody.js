@@ -25,7 +25,7 @@ class TableBody extends Component {
       Object.values(total_holiday).forEach(holiday => { 
         console.log('holiday is : ' + holiday.datum)
         console.log('event_date is : ' + value.event_date)
-        if (holiday.datum == value.event_date) {
+        if (holiday.datum === value.event_date) {
           holiday_idx.push(i)
         }
       });
@@ -36,8 +36,8 @@ class TableBody extends Component {
     });
     for (var idx = weekday.length -1; idx >= 0; idx--)
     data.splice(weekday[idx],1);
-    for (var idx = holiday_idx.length -1; idx >= 0; idx--)
-    data.splice(holiday_idx[idx],1);
+    for (var _idx = holiday_idx.length -1; _idx >= 0; _idx--)
+    data.splice(holiday_idx[_idx],1);
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
 
