@@ -13,11 +13,22 @@ class TableBody extends Component {
     var data = this.props.data || undefined;
     var lockstate = this.props.lockstate || 'unlocked';
     var total_working_hours = this.props.totaldays * 8;
+    var total_holiday = this.props.totalholiday;
+
     var total = 0;
     // clear weekends from data
     var weekday = [];
+    var holiday_idx = [];
     var i = 0;
     Object.values(data).forEach(value => {
+          // scrub holidays as well
+      Object.values(total_holiday).forEach(holiday => { 
+        console.log('holiday is : ' + holiday.datum)
+        console.log('event_date is : ' + value.event_date)
+        if (holiday.datum == value.event_date) {
+          holiday_idx.push(i)
+        }
+      });
       if (moment(value.event_date).isoWeekday() >= 6) {
         weekday.push(i)
       }
@@ -25,7 +36,8 @@ class TableBody extends Component {
     });
     for (var idx = weekday.length -1; idx >= 0; idx--)
     data.splice(weekday[idx],1);
-
+    for (var idx = holiday_idx.length -1; idx >= 0; idx--)
+    data.splice(holiday_idx[idx],1);
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
 

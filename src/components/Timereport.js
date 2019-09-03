@@ -21,6 +21,7 @@ class Timereport extends Component {
           selectedUserName: undefined,
           selectedUserId: undefined,
           totaldays: undefined,
+          totalholiday: undefined,
       }
   
       componentDidMount() {
@@ -93,14 +94,17 @@ class Timereport extends Component {
       fetchWorkDays = async (selectedDate) => {
         const getTotal = await fetch(`http://api.codelabs.se/${encodeURIComponent(selectedDate)}.json`);
         const totaldays = await getTotal.json();
+        const totalholiday = totaldays.helgdagar;
         if (totaldays) {
             this.setState({
                 totaldays: totaldays.antal_arbetsdagar,
+                totalholiday: totalholiday,
                 error: ''
             });
         } else {
             this.setState({
                 totaldays: '',
+                totalweekends: '',
                 error: 'Nothing Found in Database'
             })
             console.log(this.state.error);
@@ -122,6 +126,7 @@ class Timereport extends Component {
         <TableBody 
         data={this.state.data}
         totaldays={this.state.totaldays}
+        totalholiday={this.state.totalholiday}
         lockstate={this.state.lockstate}
         />
     </div>      
