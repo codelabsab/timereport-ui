@@ -29,8 +29,8 @@ class Timereport extends Component {
       }
   
       handleSelectChange = (selectedOption) => {
-          var selectedUserName = selectedOption.target.value.split(',')[1];
-          var selectedUserId = selectedOption.target.value.split(',')[0];
+          var selectedUserName = selectedOption.target.value.split(',')[0];
+          var selectedUserId = selectedOption.target.value.split(',')[1];
   
           this.setState({
               selectedOption: selectedOption.target.value,
