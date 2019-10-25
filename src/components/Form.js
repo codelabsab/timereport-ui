@@ -15,7 +15,7 @@ class Form extends Component {
                 <option selected disabled hidden>Select a Username</option>
                 {Object.entries(this.props.names).map(name => (
                     <option key={shortid.generate()} value={name}>
-                        {name[0]}
+                        {name[1]}
                     </option>
                 ))};
         </select>
