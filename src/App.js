@@ -15,9 +15,6 @@ function onAuthRequired({history}) {
 class App extends Component {
     
     render() {
-        console.log('app.js base url is ' + process.env.REACT_APP_okta_baseurl);
-        console.log('app.js backend_url is ' + process.env.REACT_APP_backend_url)
-
         return (
             <div>
                 <Router>

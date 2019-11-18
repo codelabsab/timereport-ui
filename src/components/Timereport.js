@@ -73,13 +73,19 @@ class Timereport extends Component {
           const yearMonth = startDate.slice(0,7);
           const getUserId = await fetch(`${this.props.backend_url}/event/users/${selectedUserId}?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`);
           const data = await getUserId.json();
-          const getLock = await fetch(`${this.props.backend_url}/lock/users/${selectedUserId}/${yearMonth}`);
+          const getLock = await fetch(`${this.props.backend_url}/users/${selectedUserId}/locks`);
           const lockstate = await getLock.json();
+          var lock_bool = undefined;
+          Object.values(lockstate).forEach(value => { 
+              if (yearMonth === value['event_date']) {
+                  lock_bool = true 
+              }
+            });
           if (data) {
               this.setState({
                   data: data,
                   error: '',
-                  lockstate: lockstate,
+                  lockstate: lock_bool,
               });
           } else {
               this.setState({

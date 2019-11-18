@@ -20,9 +20,8 @@ before_install:
 - pip install awscli
 stages:
 - name: Dev
-  if: type = pull_request
+  if: type = push AND branch != master
 - name: Prod
-  if: type = push AND branch = master
 jobs:
   include:
   - stage: Dev

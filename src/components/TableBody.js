@@ -11,21 +11,22 @@ class TableBody extends Component {
   render() {
     var shortid = require('shortid');
     var data = this.props.data || undefined;
-    var lockstate = this.props.lockstate || 'unlocked';
+    var lockstate = this.props.lockstate;
     var total_working_hours = this.props.totaldays * 8;
     var total_holiday = this.props.totalholiday;
-
+    var weekendStyle = {color: 'red'};
     var total = 0;
     // clear weekends from data
     var weekday = [];
     var holiday_idx = [];
     var i = 0;
+    var events = JSON.parse(JSON.stringify(data))
     Object.values(data).forEach(value => {
           // scrub holidays as well
       Object.values(total_holiday).forEach(holiday => { 
-        console.log('holiday is : ' + holiday.datum)
-        console.log('event_date is : ' + value.event_date)
         if (holiday.datum === value.event_date) {
+          console.log("holiday date is : " + holiday.datum)
+          console.log("event date is " + value.event_date)
           holiday_idx.push(i)
         }
       });
@@ -40,7 +41,6 @@ class TableBody extends Component {
     data.splice(holiday_idx[_idx],1);
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
-
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
         <table className="table table-hover">
@@ -59,21 +59,22 @@ class TableBody extends Component {
                 { this.props.error }
               </p>
             }
-            {data !== undefined && !isNaN(total_working_hours) &&
+            {events !== undefined &&
               <tbody>
-                {data.map(item => (
-                  <tr key={shortid.generate()}>
+                {events.map(item => 
+                <tr key={shortid.generate()}>
                     <th scope="row"></th>
                     <td>{item.user_name}</td>
                     <td>{item.reason}</td>
                     <td>{item.hours}</td>
-                    <td>{item.event_date}</td>
-                <td>{(lockstate.Count === 1) ? <span role="img" aria-label="locked">✅</span> : <span role="img" aria-label="open">📒</span>}</td>
+                    {moment(item.event_date).isoWeekday() >= 6 ? <td style={weekendStyle}> {item.event_date}</td> : <td> {item.event_date} </td>
+                    }
+                <td>{lockstate === true ? <span role="img" aria-label="locked">✅</span> : <span role="img" aria-label="open">📒</span>}</td>
                   </tr>
-                ))}
+                )}
               </tbody> 
             }
-               {(data.length === 0 && typeof data === 'object') && !isNaN(total_working_hours) &&
+               {(events.length === 0 && typeof events === 'object') && !isNaN(total_working_hours) &&
                 <tbody className="justify-content-center">
                 <tr key={shortid.generate()}>
                   <th scope="row"></th>
@@ -85,7 +86,7 @@ class TableBody extends Component {
           }
           </table>
           <div className="text-center">
-          {data && !isNaN(total_working_hours) && (total !== 0 ) ?
+          {events && !isNaN(total_working_hours) ?
             <p style={{fontWeight: 'bold'}}>Total hours / month: 
                 <span style={{color:  '#006600', fontWeight: 'bold'}}>  {total_working_hours-total}</span>/{total_working_hours}  (
                 <span style={{color: '#cc0000', fontWeight: 'bold'}}>-{total}</span>)
