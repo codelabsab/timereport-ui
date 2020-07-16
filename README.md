@@ -2,22 +2,29 @@
 
 #### Requirements
 
-.env file with the following values
+.env file with the following values, requires locally running `timereport-api`. Optionally you can change `backend_url` to dev-api at AWS.
 
 ```
 REACT_APP_okta_baseurl=https://dev-845133.okta.com
-REACT_APP_okta_client_id=abcdefgh
-REACT_APP_backend_url=https://mybackend/api
+REACT_APP_okta_client_id=0oabpof235zQQDgV5356
+REACT_APP_backend_url=http://localhost:8010
 ```
 
 #### Installation
 
+Use nodejs version 12, later versions won't install/build correctly.
+
 ```
 npm install
+# Start development build locally
+npm run start
+# Start production like build locally
 npm run build
-# to run locally
-serve -s build/ -l 3000
+npx serve -s build/ -l 3000
 ```
+
+To log in you need an account at our octa org, ask for an invite in slack.
+
 ### Packaing .env secrets for travis-ci
 ```
 $ tar cvf secrets.tar .env* 
