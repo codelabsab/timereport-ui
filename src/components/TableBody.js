@@ -8,6 +8,21 @@ class TableBody extends Component {
     data: [],
   }
 
+  renderHoursByType() {
+    if (!this.props.data) {
+      return null;
+    }
+
+    const hoursByType = this.props.data.reduce((acc, v) => {
+      acc[v.reason] = (acc[v.reason] || 0) + parseInt(v.hours)
+      return acc;
+    }, {});
+
+    return <div style={{fontWeight: 'bold'}}>
+             {Object.entries(hoursByType).map(([k, v]) => <div key="entry={k}">{k}: {v}h</div>)}
+           </div>
+  }
+
   render() {
     var shortid = require('shortid');
     var data = this.props.data || undefined;
@@ -35,10 +50,12 @@ class TableBody extends Component {
       }
       i++;
     });
-    for (var idx = weekday.length -1; idx >= 0; idx--)
-    data.splice(weekday[idx],1);
-    for (var _idx = holiday_idx.length -1; _idx >= 0; _idx--)
-    data.splice(holiday_idx[_idx],1);
+    for (var idx = weekday.length -1; idx >= 0; idx--) {
+      data.splice(weekday[idx],1);
+    }
+    for (var _idx = holiday_idx.length -1; _idx >= 0; _idx--) {
+      data.splice(holiday_idx[_idx],1);
+    }
     // summarize total hours
     Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
     return (
@@ -95,6 +112,7 @@ class TableBody extends Component {
           <p>
           </p>
           }
+          {this.renderHoursByType()}
         </div>
     </div>
     )
