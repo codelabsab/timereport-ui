@@ -48,12 +48,12 @@ class Timereport extends Component {
             endDate: endDate,
             selectedMonth: selectedMonth
         })
-        this.fetchData(this.state.selectedUserId, startDate, endDate);
+        this.fetchData(this.state.selectedUserId, startDate, endDate, selectedMonth);
         this.fetchWorkDays(selectedMonth);
     }
 
     fetchNames = async (e) => {
-        const getUserNames = await fetch(`${this.props.backend_url}/event/users`);
+        const getUserNames = await fetch(`${this.props.backend_url}/users`);
         const names = await getUserNames.json();
         if (names) {
             this.setState({
@@ -69,15 +69,14 @@ class Timereport extends Component {
         }
     }
 
-    fetchData = async (selectedUserId, startDate, endDate) => {
-        const yearMonth = startDate.slice(0, 7);
-        const getUserId = await fetch(`${this.props.backend_url}/event/users/${selectedUserId}?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`);
-        const data = await getUserId.json();
-        const getLock = await fetch(`${this.props.backend_url}/users/${selectedUserId}/locks`);
+    fetchData = async (selectedUserId, startDate, endDate, selectedMonth) => {
+        const getUserEvents = await fetch(`${this.props.backend_url}/users/${selectedUserId}/events?from=${encodeURIComponent(startDate)}&to=${encodeURIComponent(endDate)}`);
+        const data = await getUserEvents.json();
+        const getLock = await fetch(`${this.props.backend_url}/locks/dates/${selectedMonth}`);
         const lockstate = await getLock.json();
         var lock_bool = undefined;
         Object.values(lockstate).forEach(value => {
-            if (yearMonth === value['event_date']) {
+            if (selectedUserId === value['user_id']) {
                 lock_bool = true
             }
         });
