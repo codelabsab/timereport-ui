@@ -23,10 +23,15 @@ class TableBody extends Component {
     </div>
   }
 
+  renderMonthLocked() {
+    return <div style={{ fontWeight: 'bold' }}>
+      Month locked: {this.props.lockstate === true ? <span role="img" aria-label="locked">🔒</span> : <span role="img" aria-label="open">❌</span>}
+    </div >
+  }
+
   render() {
     var shortid = require('shortid');
     var data = this.props.data || undefined;
-    var lockstate = this.props.lockstate;
     var total_working_hours = this.props.totaldays * 8;
     var total_holiday = this.props.totalholiday;
     var weekendStyle = { color: 'red' };
@@ -68,7 +73,6 @@ class TableBody extends Component {
               <th scope="col">Reason</th>
               <th scope="col">Hours</th>
               <th scope="col">Date</th>
-              <th scope="col">Locked</th>
             </tr>
           </thead>
           {this.props.error &&
@@ -86,7 +90,6 @@ class TableBody extends Component {
                   <td>{item.hours}</td>
                   {moment(item.event_date).isoWeekday() >= 6 ? <td style={weekendStyle}> {item.event_date}</td> : <td> {item.event_date} </td>
                   }
-                  <td>{lockstate === true ? <span role="img" aria-label="locked">✅</span> : <span role="img" aria-label="open">📒</span>}</td>
                 </tr>
               )}
             </tbody>
@@ -104,13 +107,17 @@ class TableBody extends Component {
         </table>
         <div className="text-center">
           {events && !isNaN(total_working_hours) ?
-            <p style={{ fontWeight: 'bold' }}>Total hours / month:
+
+            <p style={{ fontWeight: 'bold' }}>
+              {this.renderMonthLocked()}
+              Total hours / month:
                 <span style={{ color: '#006600', fontWeight: 'bold' }}>  {total_working_hours - total}</span>/{total_working_hours}  (
                 <span style={{ color: '#cc0000', fontWeight: 'bold' }}>-{total}</span>)
             </p>
             :
             <p>
             </p>
+
           }
           {this.renderHoursByType()}
         </div>
