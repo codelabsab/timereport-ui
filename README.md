@@ -6,6 +6,7 @@
 
 ```
 REACT_APP_backend_url=http://localhost:8010
+REACT_APP_google_client_id="728339485019-goirkmgqtegqhmtgfagcjn838dv0ak76.apps.googleusercontent.com"
 ```
 
 #### Installation
