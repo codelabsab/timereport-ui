@@ -52,7 +52,7 @@ class Timereport extends Component {
         this.fetchWorkDays(selectedMonth);
     }
 
-    fetchNames = async (e) => {
+    fetchNames = async () => {
         const getUserNames = await fetch(`${this.props.backend_url}/users`);
         const names = await getUserNames.json();
         if (names) {
