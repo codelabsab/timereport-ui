@@ -70,10 +70,10 @@ class Timereport extends Component {
     }
 
     fetchData = async (selectedUserId, startDate, endDate, selectedMonth) => {
-        const getUserEvents = await fetch(`${this.props.backend_url}/users/${selectedUserId}/events?from=${encodeURIComponent(startDate)}&to=${encodeURIComponent(endDate)}`);
-        const data = await getUserEvents.json();
-        const getLock = await fetch(`${this.props.backend_url}/locks/dates/${selectedMonth}`);
-        const lockstate = await getLock.json();
+        const [data, lockstate] = await Promise.all([
+            fetch(`${this.props.backend_url}/users/${selectedUserId}/events?from=${encodeURIComponent(startDate)}&to=${encodeURIComponent(endDate)}`).then(response => response.json()),
+            fetch(`${this.props.backend_url}/locks/dates/${selectedMonth}`).then(response => response.json()),
+        ]);
         var lock_bool = undefined;
         Object.values(lockstate).forEach(value => {
             if (selectedUserId === value['user_id']) {
