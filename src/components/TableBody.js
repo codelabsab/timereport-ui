@@ -26,7 +26,7 @@ class TableBody extends Component {
   renderMonthLocked() {
     return <div style={{ fontWeight: 'bold' }}>
       Month locked: {this.props.lockstate === true ? <span role="img" aria-label="locked">🔒</span> : <span role="img" aria-label="open">❌</span>}
-    </div >
+    </div>
   }
 
   render() {
@@ -107,13 +107,12 @@ class TableBody extends Component {
         </table>
         <div className="text-center">
           {events && !isNaN(total_working_hours) ?
-
-            <p style={{ fontWeight: 'bold' }}>
+            <div style={{ fontWeight: 'bold' }}>
               {this.renderMonthLocked()}
               Total hours / month:
                 <span style={{ color: '#006600', fontWeight: 'bold' }}>  {total_working_hours - total}</span>/{total_working_hours}  (
                 <span style={{ color: '#cc0000', fontWeight: 'bold' }}>-{total}</span>)
-            </p>
+            </div>
             :
             <p>
             </p>
