@@ -5,9 +5,8 @@
 .env file with the following values, requires locally running `timereport-api`. Optionally you can change `backend_url` to dev-api at AWS.
 
 ```
-REACT_APP_okta_baseurl=https://dev-845133.okta.com
-REACT_APP_okta_client_id=0oabpof235zQQDgV5356
 REACT_APP_backend_url=http://localhost:8010
+REACT_APP_google_client_id="728339485019-goirkmgqtegqhmtgfagcjn838dv0ak76.apps.googleusercontent.com"
 ```
 
 #### Installation
@@ -26,8 +25,9 @@ npx serve -s build/ -l 3000
 To log in you need an account at our octa org, ask for an invite in slack.
 
 ### Packaing .env secrets for travis-ci
+
 ```
-$ tar cvf secrets.tar .env* 
+$ tar cvf secrets.tar .env*
 a .env
 a .env.dev
 a .env.prod
@@ -43,4 +43,3 @@ Commit all changes to your .travis.yml.
 $ git add secrets.tar.enc .travis.yml
 
 ```
-
