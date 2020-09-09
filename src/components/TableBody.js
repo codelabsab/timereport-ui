@@ -14,7 +14,7 @@ class TableBody extends Component {
     }
 
     const hoursByType = this.props.data.reduce((acc, v) => {
-      acc[v.reason] = (acc[v.reason] || 0) + parseInt(v.hours)
+      acc[v.reason] = (acc[v.reason] || 0) + parseFloat(v.hours)
       return acc;
     }, {});
 
@@ -62,7 +62,7 @@ class TableBody extends Component {
       data.splice(holiday_idx[_idx], 1);
     }
     // summarize total hours
-    Object.values(data).forEach(value => { total = total + parseInt(value.hours) });
+    Object.values(data).forEach(value => { total = total + parseFloat(value.hours) });
     return (
       <div className="col-sm-12 col-md-12 col-lg-12">
         <table className="table table-hover">
