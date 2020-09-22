@@ -6,6 +6,7 @@ import {
   Switch,
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
+import { Summary } from "./components/Summary";
 import GoogleLoginButton from "./components/GoogleLogin";
 import Timereport from "./components/Timereport";
 import { Container } from "semantic-ui-react";
@@ -49,7 +50,17 @@ class App extends Component {
                       backend_url={process.env.REACT_APP_backend_url}
                     />
                   ) : (
-                    <Redirect to="/login" />
+                    <Redirect to="/" />
+                  )
+                }
+              />
+              <Route
+                path="/summary"
+                render={() =>
+                  this.state.loggedIn ? (
+                    <Summary backendUrl={process.env.REACT_APP_backend_url} />
+                  ) : (
+                    <Redirect to="/" />
                   )
                 }
               />
