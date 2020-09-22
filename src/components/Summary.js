@@ -73,7 +73,7 @@ export function Summary({ backendUrl }) {
       .writeText(summaryRef.current.innerText)
       .then(() => {
         setCopied(() => true);
-        setTimeout(() => setCopied(() => false), 5000);
+        setTimeout(() => setCopied(() => false), 1000);
       })
       .catch(() => alert("Failed to copy!"));
   };
