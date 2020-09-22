@@ -71,7 +71,10 @@ export function Summary({ backendUrl }) {
   const onCopy = (e) => {
     navigator.clipboard
       .writeText(summaryRef.current.innerText)
-      .then(() => setCopied(() => true))
+      .then(() => {
+        setCopied(() => true);
+        setTimeout(() => setCopied(() => false), 5000);
+      })
       .catch(() => alert("Failed to copy!"));
   };
 
