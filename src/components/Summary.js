@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import DatePicker from "./DatePicker";
+import Datetime from "react-datetime";
 import moment from "moment";
 
 const filterNonWorkdays = (reportedData, holidayDays) => {
@@ -80,7 +80,14 @@ export function Summary({ backendUrl }) {
 
   return (
     <div className="summary-container">
-      <DatePicker handleDateChange={handleDateChange} />
+      <Datetime
+        dateFormat="YYYY-MM"
+        utc={true}
+        closeOnSelect={true}
+        timeFormat={false}
+        value={date}
+        onChange={handleDateChange}
+      />
 
       <button className="summary-copy" onClick={onCopy}>
         Copy
