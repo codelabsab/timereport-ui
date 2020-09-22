@@ -6,17 +6,20 @@ import {
   Switch,
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
+import { Summary } from "./components/Summary";
 import GoogleLoginButton from "./components/GoogleLogin";
 import Timereport from "./components/Timereport";
 import { Container } from "semantic-ui-react";
 
 require("dotenv").config();
 
+const LOGIN_STORAGE_KEY = "timereport-is-logged-in";
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      loggedIn: localStorage.getItem(LOGIN_STORAGE_KEY),
     };
     this.onLogin = this.onLogin.bind(this);
     this.onLogout = this.onLogout.bind(this);
@@ -24,10 +27,12 @@ class App extends Component {
 
   onLogin() {
     this.setState({ loggedIn: true });
+    localStorage.setItem(LOGIN_STORAGE_KEY, true);
   }
 
   onLogout() {
     this.setState({ loggedIn: false });
+    localStorage.setItem(LOGIN_STORAGE_KEY, false);
   }
 
   render() {
@@ -45,7 +50,17 @@ class App extends Component {
                       backend_url={process.env.REACT_APP_backend_url}
                     />
                   ) : (
-                    <Redirect to="/login" />
+                    <Redirect to="/" />
+                  )
+                }
+              />
+              <Route
+                path="/summary"
+                render={() =>
+                  this.state.loggedIn ? (
+                    <Summary backendUrl={process.env.REACT_APP_backend_url} />
+                  ) : (
+                    <Redirect to="/" />
                   )
                 }
               />
