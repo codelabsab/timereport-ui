@@ -256,3 +256,21 @@ td.rdtYear:hover {
   justify-content: center;
   border: 1px solid black;
 }
+
+.summary-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-users {
+  padding-top: 1em;
+}
+
+.summary-user {
+  padding-top: 1em;
+}
+
+.summary-copy {
+  margin-top: 1em;
+  width: 4em;
+}
