@@ -97,7 +97,7 @@ class Timereport extends Component {
     }
 
     fetchWorkDays = async (selectedDate) => {
-        const getTotal = await fetch(`http://api.codelabs.se/${encodeURIComponent(selectedDate)}.json`);
+        const getTotal = await fetch(`https://api2.codelabs.se/${encodeURIComponent(selectedDate)}.json`);
         const totaldays = await getTotal.json();
         const totalholiday = totaldays.helgdagar;
         if (totaldays) {
