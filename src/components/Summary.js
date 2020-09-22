@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DatePicker from "./DatePicker";
 import moment from "moment";
 
@@ -54,20 +54,39 @@ const loadData = async (backendUrl, date, setUsers) => {
 export function Summary({ backendUrl }) {
   const [users, setUsers] = useState([]);
   const [date, setDate] = useState(moment().format("YYYY-MM"));
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     setUsers([]);
     loadData(backendUrl, date, setUsers);
   }, [date]);
+
+  const summaryRef = useRef();
 
   const handleDateChange = (p) => {
     const selectedMonth = moment.unix(p / 1000).format("YYYY-MM");
     setDate(selectedMonth);
   };
 
+  const onCopy = (e) => {
+    navigator.clipboard
+      .writeText(summaryRef.current.innerText)
+      .then(() => setCopied(() => true))
+      .catch(() => alert("Failed to copy!"));
+  };
+
   return (
     <div className="summary-container">
       <DatePicker handleDateChange={handleDateChange} />
-      <div className="summary-users">{users.map((u) => User(u))}</div>
+
+      <button className="summary-copy" onClick={onCopy}>
+        Copy
+      </button>
+      {copied ? <span style={{ color: "red" }}>Copied.</span> : null}
+
+      <div ref={summaryRef} className="summary-users">
+        {users.map((u) => User(u))}
+      </div>
     </div>
   );
 }

@@ -269,3 +269,8 @@ td.rdtYear:hover {
 .summary-user {
   padding-top: 1em;
 }
+
+.summary-copy {
+  margin-top: 1em;
+  width: 4em;
+}
