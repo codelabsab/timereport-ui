@@ -28,6 +28,13 @@ class Timereport extends Component {
         this.fetchNames();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+      if (!this.state.selectedUserId || !this.state.selectedMonth) return;
+      if (prevState.selectedUserId !== this.state.selectedUserId || prevState.selectedMonth !== this.state.selectedMonth) {
+        this.fetchData(this.state.selectedUserId, this.state.startDate, this.state.endDate, this.state.selectedMonth);
+      }
+    }
+
     handleSelectChange = (selectedOption) => {
         var selectedUserName = selectedOption.target.value.split(',')[1];
         var selectedUserId = selectedOption.target.value.split(',')[0];
@@ -48,7 +55,6 @@ class Timereport extends Component {
             endDate: endDate,
             selectedMonth: selectedMonth
         })
-        this.fetchData(this.state.selectedUserId, startDate, endDate, selectedMonth);
     }
 
     fetchNames = async () => {
@@ -73,7 +79,7 @@ class Timereport extends Component {
             fetch(`${this.props.backend_url}/users/${selectedUserId}/events?from=${encodeURIComponent(startDate)}&to=${encodeURIComponent(endDate)}`).then(response => response.json()),
             fetch(`${this.props.backend_url}/locks/dates/${selectedMonth}`).then(response => response.json()),
 
-            fetch(`https://api2.codelabs.se/${encodeURIComponent(selectedMonth)}.json`).then(response=>response.json()),
+            fetch(`https://api2.codelabs.se/${encodeURIComponent(selectedMonth)}.json`).then(response => response.json()),
         ]);
         var lock_bool = undefined;
         Object.values(lockstate).forEach(value => {
