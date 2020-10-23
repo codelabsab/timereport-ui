@@ -49,7 +49,6 @@ class Timereport extends Component {
             selectedMonth: selectedMonth
         })
         this.fetchData(this.state.selectedUserId, startDate, endDate, selectedMonth);
-        this.fetchWorkDays(selectedMonth);
     }
 
     fetchNames = async () => {
@@ -70,9 +69,11 @@ class Timereport extends Component {
     }
 
     fetchData = async (selectedUserId, startDate, endDate, selectedMonth) => {
-        const [data, lockstate] = await Promise.all([
+        const [data, lockstate, totaldays] = await Promise.all([
             fetch(`${this.props.backend_url}/users/${selectedUserId}/events?from=${encodeURIComponent(startDate)}&to=${encodeURIComponent(endDate)}`).then(response => response.json()),
             fetch(`${this.props.backend_url}/locks/dates/${selectedMonth}`).then(response => response.json()),
+
+            fetch(`https://api2.codelabs.se/${encodeURIComponent(selectedMonth)}.json`).then(response=>response.json()),
         ]);
         var lock_bool = undefined;
         Object.values(lockstate).forEach(value => {
@@ -94,11 +95,6 @@ class Timereport extends Component {
             })
             console.log(this.state.error);
         }
-    }
-
-    fetchWorkDays = async (selectedDate) => {
-        const getTotal = await fetch(`https://api2.codelabs.se/${encodeURIComponent(selectedDate)}.json`);
-        const totaldays = await getTotal.json();
         const totalholiday = totaldays.helgdagar;
         if (totaldays) {
             this.setState({
@@ -115,6 +111,7 @@ class Timereport extends Component {
             console.log(this.state.error);
         }
     }
+
     render() {
         return (
             <div className="col-sm-12 col-md-12 col-lg-12">
