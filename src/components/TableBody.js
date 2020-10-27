@@ -31,7 +31,7 @@ class TableBody extends Component {
 
   render() {
     var shortid = require('shortid');
-    var data = this.props.data || undefined;
+    let data = this.props.data || [];
     var total_working_hours = this.props.totaldays * 8;
     var total_holiday = this.props.totalholiday;
     var weekendStyle = { color: 'red' };
