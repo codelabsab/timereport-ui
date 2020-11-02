@@ -81,14 +81,17 @@ class Timereport extends Component {
 
             fetch(`https://api2.codelabs.se/${encodeURIComponent(selectedMonth)}.json`).then(response => response.json()),
         ]);
-        var lock_bool = undefined;
+        const totalholiday = totaldays.helgdagar;
+        let lock_bool = undefined;
         Object.values(lockstate).forEach(value => {
             if (selectedUserId === value['user_id']) {
                 lock_bool = true
             }
         });
-        if (data) {
+        if (data && totalholiday) {
             this.setState({
+                totaldays: totaldays.antal_arbetsdagar,
+                totalholiday: totalholiday,
                 data: data,
                 error: '',
                 lockstate: lock_bool,
@@ -96,22 +99,9 @@ class Timereport extends Component {
         } else {
             this.setState({
                 data: undefined,
+                totaldays: 0,
+                totalholiday: [],
                 lockstate: undefined,
-                error: 'Nothing Found in Database'
-            })
-            console.log(this.state.error);
-        }
-        const totalholiday = totaldays.helgdagar;
-        if (totaldays) {
-            this.setState({
-                totaldays: totaldays.antal_arbetsdagar,
-                totalholiday: totalholiday,
-                error: ''
-            });
-        } else {
-            this.setState({
-                totaldays: '',
-                totalweekends: '',
                 error: 'Nothing Found in Database'
             })
             console.log(this.state.error);
