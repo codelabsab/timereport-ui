@@ -1,13 +1,11 @@
 name: Node 12
 on: push
-
 jobs:
   build:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: 12
-
+        node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
       - name: Setup ENV
@@ -21,7 +19,7 @@ jobs:
       - name: Setup node dev
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run build:prod
       - uses: jakejarvis/s3-sync-action@master
