@@ -7,10 +7,14 @@ jobs:
     name: Node 12
     steps:
       - uses: actions/checkout@v2
-      - run: echo $REACT_APP_BACKEND_URL > .env.prod && echo $REACT_APP_GOOGLE_CLIENT_ID >> .env.prod
+      - name: Setup ENV
+        run: |
+          echo $REACT_APP_BACKEND_URL > .env.prod
+          echo $REACT_APP_GOOGLE_CLIENT_ID >> .env.prod
       env:
         REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_PROD_BACKEND_URL }}
         REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_PROD_GOOGLE_CLIENT_ID }}
+
       - name: Setup node dev
         uses: actions/setup-node@v2
         with:
