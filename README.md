@@ -1,30 +1,34 @@
-#### TIMEREPORT-UI
+# TIMEREPORT-UI
 
-#### Requirements
+## Local development
 
-.env file with the following values, requires locally running `timereport-api`. Optionally you can change `backend_url` to dev-api at AWS.
+Create a `.env` file with the following values:
 
 ```
 REACT_APP_backend_url=http://localhost:8010
 REACT_APP_google_client_id="728339485019-goirkmgqtegqhmtgfagcjn838dv0ak76.apps.googleusercontent.com"
 ```
 
-#### Installation
+__NOTE: requires locally running [timereport-api](https://github.com/codelabsab/timereport-api). Optionally you can change `backend_url` to dev-api at AWS.__
 
-Use nodejs version 12, later versions won't install/build correctly.
+
+#### Start the UI locally
+
+1. Build the docker image:
 
 ```
-npm install
-# Start development build locally
-npm run start
-# Start production like build locally
-npm run build
-npx serve -s build/ -l 3000
+# docker build . -t local-timereport-ui
 ```
 
-To log in you need an account at our octa org, ask for an invite in slack.
+2. Start the container:
 
-### Packaing .env secrets for travis-ci
+```
+# docker run -p 3000:3000 local-timereport:latest
+```
+
+Now you should be to access the UI via http://localhost:3000
+
+## Create secrets for travis-ci
 
 ```
 $ tar cvf secrets.tar .env*
