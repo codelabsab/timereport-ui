@@ -21,7 +21,7 @@ class GoogleLoginButton extends Component {
   }
 
   handleLoginFailure(r) {
-    console.error(`Failed to log in ${r}`);
+    console.error(`Failed to log in ${JSON.stringify(r)}`);
   }
 
   render() {
