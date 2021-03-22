@@ -28,22 +28,6 @@ __NOTE: requires locally running [timereport-api](https://github.com/codelabsab/
 
 Now you should be to access the UI via http://localhost:3000
 
-## Create secrets for travis-ci
+## Update secrets
 
-```
-$ tar cvf secrets.tar .env*
-a .env
-a .env.dev
-a .env.prod
-
-$ travis encrypt-file secrets.tar --add
-storing result as secrets.tar.enc
-storing secure env variables for decryption
-
-Make sure to add secrets.tar.enc to the git repository.
-Make sure not to add secrets.tar to the git repository.
-Commit all changes to your .travis.yml.
-
-$ git add secrets.tar.enc .travis.yml
-
-```
+Secrets are added/deleted/updated in github.
