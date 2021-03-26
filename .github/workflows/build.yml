@@ -19,6 +19,12 @@ jobs:
           backend_url_prod: ${{ secrets.BACKEND_URL_PROD }}
           google_client_id_prod: ${{ secrets.GOOGLE_CLIENT_ID_PROD }}
 
+      - uses: actions/cache@v2
+        id: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}      
+      
       - name: Setup node instance
         uses: actions/setup-node@v2
         with:
