@@ -31,7 +31,7 @@ jobs:
       - name: Push to s3 bucket
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read 
+          args: --acl public-read --delete
         env:
           AWS_S3_BUCKET: dev.timereport.codelabs.se
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
