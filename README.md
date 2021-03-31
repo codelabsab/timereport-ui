@@ -17,7 +17,7 @@ __NOTE: requires locally running [timereport-api](https://github.com/codelabsab/
 2. Start the container:
 
 ```
-# docker run -e REACT_APP_backend_url="http://localhost:8010 -p 3000:3000 local-timereport-ui:latest
+# docker run -e REACT_APP_backend_url="http://localhost:8010" -p 3000:3000 local-timereport-ui:latest
 ```
 
 Now you should be to access the UI via http://localhost:3000
