@@ -14,13 +14,23 @@ import { Container } from "semantic-ui-react";
 require("dotenv").config();
 
 const LOGIN_STORAGE_KEY = "timereport-is-logged-in";
+const ENV = process.env.NODE_ENV;
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loggedIn: localStorage.getItem(LOGIN_STORAGE_KEY),
-    };
+
+    if (ENV === "development") {
+      console.log(`Skip login in ${ENV} mode`)
+      this.state = {
+        loggedIn: true
+      }
+    } else {
+      this.state = {
+        loggedIn: localStorage.getItem(LOGIN_STORAGE_KEY),
+      }
+    }
+
     this.onLogin = this.onLogin.bind(this);
     this.onLogout = this.onLogout.bind(this);
   }
