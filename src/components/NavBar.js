@@ -21,6 +21,10 @@ export default class NavBar extends Component {
               <Icon name="calendar alternate outline" />
               Summary
             </Menu.Item>
+            <Menu.Item id="timereport-button" as="a" href="/download">
+              <Icon name="calendar alternate outline" />
+              Download
+            </Menu.Item>
           </Container>
         </Menu>
       </div>
