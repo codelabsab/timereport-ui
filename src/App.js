@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { Summary } from "./components/Summary";
-import { Download } from "./components/Download";
 import GoogleLoginButton from "./components/GoogleLogin";
 import Timereport from "./components/Timereport";
 import { Container } from "semantic-ui-react";
@@ -70,16 +69,6 @@ class App extends Component {
                 render={() =>
                   this.state.loggedIn ? (
                     <Summary backendUrl={process.env.REACT_APP_backend_url} />
-                  ) : (
-                    <Redirect to="/" />
-                  )
-                }
-              />
-                            <Route
-                path="/download"
-                render={() =>
-                  this.state.loggedIn ? (
-                    <Download backendUrl={process.env.REACT_APP_backend_url} />
                   ) : (
                     <Redirect to="/" />
                   )
