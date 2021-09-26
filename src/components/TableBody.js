@@ -1,7 +1,10 @@
+import ReactExport from "react-data-export";
 import React, { Component } from 'react'
-
 var moment = require('moment');
 
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 class TableBody extends Component {
   state = {
@@ -30,6 +33,7 @@ class TableBody extends Component {
   }
 
   render() {
+    
     var shortid = require('shortid');
     let data = this.props.data || [];
     var total_working_hours = this.props.totaldays * 8;
@@ -37,11 +41,13 @@ class TableBody extends Component {
     var weekendStyle = { color: 'red' };
     var total = 0;
     // clear weekends from data
+    var month = "";
     var weekday = [];
     var holiday_idx = [];
     var i = 0;
     var events = JSON.parse(JSON.stringify(data))
     Object.values(data).forEach(value => {
+      month = value.event_date.substr(0,7)
       // scrub holidays as well
       Object.values(total_holiday).forEach(holiday => {
         if (holiday.datum === value.event_date) {
@@ -120,6 +126,16 @@ class TableBody extends Component {
           }
           {this.renderHoursByType()}
         </div>
+            <div className="summary-container">
+      <ExcelFile>
+                <ExcelSheet data={events} name={month}>
+                    <ExcelColumn label="Namn" value="user_name"/>
+                    <ExcelColumn label="Löneartsnamn" value="reason"/>
+                    <ExcelColumn label="Datum" value="event_date"/>
+                    <ExcelColumn label="Antal" value="hours"/>
+                </ExcelSheet>
+            </ExcelFile>
+    </div>
       </div>
     )
   }
