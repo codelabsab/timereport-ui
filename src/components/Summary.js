@@ -102,19 +102,21 @@ export function Summary({ backendUrl }) {
 }
 
 function User({ id, name, isLocked, reports }) {
-  return (
+  if (isLocked === true && Object.keys(reports).length !== 0) {
+    return (
     <div key={id} className="summary-user">
       {name}
-      {isLocked ? "" : " - NOT LOCKED"}
       {reports.map((r) => Report(r))}
     </div>
   );
+  }
 }
 
-function Report({ event_date, reason }) {
+function Report({ event_date, reason, hours }) {
   return (
     <div key={event_date}>
-      {event_date} - {reason}
+      {event_date} - {reason} - {hours}
     </div>
-  );
+    
+  )
 }

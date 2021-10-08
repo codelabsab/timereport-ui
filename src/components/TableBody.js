@@ -46,6 +46,7 @@ class TableBody extends Component {
     var holiday_idx = [];
     var i = 0;
     var events = JSON.parse(JSON.stringify(data))
+
     Object.values(data).forEach(value => {
       month = value.event_date.substr(0,7)
       // scrub holidays as well
@@ -127,7 +128,7 @@ class TableBody extends Component {
           {this.renderHoursByType()}
         </div>
             <div className="summary-container">
-      <ExcelFile>
+             <ExcelFile filename={`${events.map(a => a.user_name).toString()}-${month}`}>
                 <ExcelSheet data={events} name={month}>
                     <ExcelColumn label="Namn" value="user_name"/>
                     <ExcelColumn label="Löneartsnamn" value="reason"/>
