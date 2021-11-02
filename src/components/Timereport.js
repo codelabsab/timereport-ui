@@ -7,6 +7,15 @@ var moment = require('moment');
 
 
 class Timereport extends Component {
+
+    backend_api_key = process.env.REACT_APP_backend_api_key ? process.env.REACT_APP_backend_api_key : "development"
+
+    // TODO: Set this as default for all fetch requests
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': this.backend_api_key
+    }
+
     constructor(props) {
         super(props)
         this.handleSelectChange = this.handleSelectChange.bind(this);
@@ -29,10 +38,10 @@ class Timereport extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-      if (!this.state.selectedUserId || !this.state.selectedMonth) return;
-      if (prevState.selectedUserId !== this.state.selectedUserId || prevState.selectedMonth !== this.state.selectedMonth) {
-        this.fetchData(this.state.selectedUserId, this.state.startDate, this.state.endDate, this.state.selectedMonth);
-      }
+        if (!this.state.selectedUserId || !this.state.selectedMonth) return;
+        if (prevState.selectedUserId !== this.state.selectedUserId || prevState.selectedMonth !== this.state.selectedMonth) {
+            this.fetchData(this.state.selectedUserId, this.state.startDate, this.state.endDate, this.state.selectedMonth);
+        }
     }
 
     handleSelectChange = (selectedOption) => {
@@ -58,7 +67,7 @@ class Timereport extends Component {
     }
 
     fetchNames = async () => {
-        const getUserNames = await fetch(`${this.props.backend_url}/users`);
+        const getUserNames = await fetch(`${this.props.backend_url}/users`, { headers: this.headers });
         const names = await getUserNames.json();
         if (names) {
             this.setState({
@@ -76,8 +85,8 @@ class Timereport extends Component {
 
     fetchData = async (selectedUserId, startDate, endDate, selectedMonth) => {
         const [data, lockstate, totaldays] = await Promise.all([
-            fetch(`${this.props.backend_url}/users/${selectedUserId}/events?from=${encodeURIComponent(startDate)}&to=${encodeURIComponent(endDate)}`).then(response => response.json()),
-            fetch(`${this.props.backend_url}/locks/dates/${selectedMonth}`).then(response => response.json()),
+            fetch(`${this.props.backend_url}/users/${selectedUserId}/events?from=${encodeURIComponent(startDate)}&to=${encodeURIComponent(endDate)}`, { headers: this.headers }).then(response => response.json()),
+            fetch(`${this.props.backend_url}/locks/dates/${selectedMonth}`, { headers: this.headers }).then(response => response.json()),
 
             fetch(`https://api2.codelabs.se/${encodeURIComponent(selectedMonth)}.json`).then(response => response.json()),
         ]);
