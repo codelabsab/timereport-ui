@@ -12,7 +12,7 @@ jobs:
           echo REACT_APP_backend_api_key=$backend_api_key >> .env
           echo REACT_APP_google_client_id=$google_client_id >> .env
         env:
-          backend_url: ${{ secrets.BACKEND_URL_DEV }}
+          backend_url: "https://ywdi37qne9.execute-api.eu-north-1.amazonaws.com/api/v1"
           backend_api_key: ${{ secrets.BACKEND_API_KEY_DEV }}
           google_client_id: ${{ secrets.GOOGLE_CLIENT_ID_DEV }}
 
