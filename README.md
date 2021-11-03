@@ -25,12 +25,12 @@ Now you should be to access the UI via http://localhost:3000
 
 ## Update secrets
 
-Secrets are added/deleted/updated in github action [secrets](https://github.com/codelabsab/timereport-ui/settings/secrets/actions).
+Secrets are added/deleted/updated in GitHub action [secrets](https://github.com/codelabsab/timereport-ui/settings/secrets/actions).
 
 Secrets should end with `_dev` or `_prod`.
 
-### Backend URL secret
-this secret is the URL to timereport-api. To find the URL it's easiest to login to AWS and find the api gateway.
+### Backend API key
+this secret to authenticate requests to backend.
 
 ### Google client ID secret
 This secret is the google client id that we use to authenticate codelabs users via google auth.

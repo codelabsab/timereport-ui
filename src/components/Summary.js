@@ -2,6 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import Datetime from "react-datetime";
 import moment from "moment";
 
+var backend_api_key = process.env.REACT_APP_backend_api_key ? process.env.REACT_APP_backend_api_key : "development"
+var headers = {
+  'Authorization': backend_api_key,
+}
+
 const filterNonWorkdays = (reportedData, holidayDays) => {
   return reportedData.filter((r) => {
     const eventDate = new Date(r.event_date);
@@ -24,8 +29,8 @@ const loadData = async (backendUrl, date, setUsers) => {
   const startDate = `${date}-01`;
   const endDate = `${date}-31`;
   const [names, locks, workdays] = await Promise.all([
-    fetch(`${backendUrl}/users`).then((r) => r.json()),
-    fetch(`${backendUrl}/locks/dates/${date}`).then((r) => r.json()),
+    fetch(`${backendUrl}/users`, { headers: headers }).then((r) => r.json()),
+    fetch(`${backendUrl}/locks/dates/${date}`, { headers: headers }).then((r) => r.json()),
     fetch(`https://api2.codelabs.se/${date}.json`).then((r) => r.json()),
   ]);
 
@@ -36,7 +41,7 @@ const loadData = async (backendUrl, date, setUsers) => {
       const reportedData = await fetch(
         `${backendUrl}/users/${id}/events?from=${encodeURIComponent(
           startDate
-        )}&to=${encodeURIComponent(endDate)}`
+        )}&to=${encodeURIComponent(endDate)}`, { headers: headers }
       ).then((r) => r.json());
 
       const reports = filterNonWorkdays(reportedData, holidayDays);
