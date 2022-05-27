@@ -11,7 +11,7 @@
     "daterangepicker": "^3.0.3",
     "file-saver": "^2.0.5",
     "hashids": "^1.2.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "npm": "^6.8.0",
     "react": "^16.8.2",
     "react-bootstrap-daterangepicker": "^4.1.0",
