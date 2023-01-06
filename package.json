@@ -12,7 +12,7 @@
     "react-dom": "^16.8.2",
     "react-google-login": "^5.1.21",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "2.1.5",
+    "react-scripts": "5.0.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.85.0",
     "shortid": "^2.2.14",
